@@ -91,7 +91,7 @@ async function listFiles(authClient) {
   return files;
 }
 
-async function uploadBasic(authClient) {
+async function uploadBasic(authClient, temp) {
     const fs = require('fs');
 
     const service = google.drive({version: 'v3', auth: authClient});
@@ -100,7 +100,7 @@ async function uploadBasic(authClient) {
       };
       const media = {
         mimeType: 'image/jpeg',
-        body: fs.createReadStream('files/photo.jpg'),
+        body: fs.createReadStream(`files/${temp.temp}`),
       };
 
       try {
@@ -202,8 +202,8 @@ export class AppService {
     return authorize().then(listFiles).catch(console.error);
   }
 
-  fupload(){
-    return authorize().then(uploadBasic).catch(console.error);
+  fupload(temp:string){
+    return authorize().then((value) => uploadBasic(value,temp)).catch(console.error);
   }
 
   fsearch(temp:string)

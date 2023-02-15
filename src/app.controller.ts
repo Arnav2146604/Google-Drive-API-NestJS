@@ -14,9 +14,9 @@ export class AppController {
   flist() {
     return this.appService.flist();
   }
-  @Get("/upload")
-  fupload(){
-    return this.appService.fupload();
+  @Get("/upload/:temp")
+  fupload(@Param() temp: string){
+    return this.appService.fupload(temp);
   }
 
   @Get("/search/:temp")
